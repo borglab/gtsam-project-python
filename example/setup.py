@@ -8,11 +8,11 @@ except ImportError:
 packages = find_packages()
 
 setup(
-    name='varun_example',
+    name='example',
     description='Simple example of wrapping projects with Python and GTSAM',
     url='https://gtsam.org/',
     version='1.0.0',
-    author='Varun Agrawak',
+    author='Varun Agrawal',
     author_email='varunagrawal@gatech.edu',
     license='Simplified BSD license',
     keywords='wrapper tutorial example',
