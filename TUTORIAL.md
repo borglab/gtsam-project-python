@@ -7,6 +7,7 @@ This is a tutorial on how to wrap your own C++ projects using GTSAM's python wra
 We assume you have Python 3 installed. We support Python 3.6 and up.
 
 We also assume some knowledge of how Python packaging and setup works. If you understand how to write your own basic `setup.py` file, you should be fine.
+Using this template project, you should only need to update the metadata information about your project. Check out the [python packaging website](https://packaging.python.org/tutorials/packaging-projects/) to learn more.
 
 As a bonus, if you understand Cython's build process, this tutorial should be fairly intuitive.
 
@@ -107,7 +108,7 @@ An illustrative example is provided in the `src` directory of this repository.
 
 # Compiling
 
-To compile and wrap the code, the familiar CMake process is followed. We create a build directory and run `cmake` and `make`
+To compile and wrap the code, the familiar CMake process is followed. Starting from the directory where the `setup.py` file is located, we create a build directory and run `cmake` and `make`.
 
 ```sh
 mkdir build && cd build

@@ -34,6 +34,7 @@ setup(
     ],
 
     packages=packages,
+    # Load the built shared object files
     package_data={package:
         [f for f in os.listdir(package.replace('.', os.path.sep)) if os.path.splitext(f)[1] in ('.so', '.pyd')]
         for package in packages
