@@ -1,3 +1,4 @@
+#include <gtsam/geometry/Rot3.h>
 #include <iostream>
 #include <string>
 
