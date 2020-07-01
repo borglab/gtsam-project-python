@@ -11,6 +11,8 @@ Using this template project, you should only need to update the metadata informa
 
 As a bonus, if you understand Cython's build process, this tutorial should be fairly intuitive.
 
+**NOTE** This tutorial has been tested using GTSAM version 4.0.x and above.
+
 # Project Setup
 
 As a set of minimal requirements, the project should be set up as follows:
