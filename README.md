@@ -1,5 +1,4 @@
 # gtsam-project-python
 Project template using GTSAM + python wrapping
 
-# DISCLAIMER
-Under construction, doesn't work yet!! :(
+Please refer to the [tutorial](TUTORIAL.md) to get started.
