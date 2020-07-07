@@ -33,5 +33,5 @@
 
 # Directories
 .ipynb_checkpoints/*
-build/*
+**/build/*
 example/__pycache__

@@ -22,5 +22,6 @@ Project template using GTSAM + python wrapping
 - Run `make`, and the wrapped module will be installed to a `cython` directory.
 - Navigate to the `cython` directory and run `python setup.py install`.
 
-For more detailed information, please see
-[this link](https://github.com/borglab/gtsam/tree/develop/cython)
+## DOCUMENTATION
+
+For more detailed information, please refer to the [tutorial](TUTORIAL.md).
