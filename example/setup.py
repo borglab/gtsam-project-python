@@ -17,17 +17,17 @@ package_data = {
     for package in packages
 }
 
-dependencies = ["Cython>=0.25.2", "backports_abc>=0.5", "numpy>=1.12.0"]
+dependencies = ["gtsam", "Cython>=0.25.2", "backports_abc>=0.5", "numpy>=1.12.0"]
 
 setup(
     name="gtsam_example",
     description="Simple example of wrapping projects with GTSAM",
-    url="https://gtsam.org/",
+    url="https://github.com/borglab/gtsam-project-python/",
     version="1.0.0",
     author="Varun Agrawal",
     author_email="varunagrawal@gatech.edu",
     license="Simplified BSD license",
-    keywords="wrapper tutorial example",
+    keywords="gtsam wrapper tutorial example",
     long_description="",
     long_description_content_type="text/markdown",
     python_requires=">=3.6",
@@ -47,5 +47,9 @@ setup(
     packages=packages,
     # Load the built shared object files
     package_data=package_data,
+    include_package_data=True,
+    # Ensure that the compiled .so file is properly packaged
+    zip_safe=False,
+    platforms="any",
     install_requires=dependencies,
 )
