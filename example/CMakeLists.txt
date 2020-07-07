@@ -72,7 +72,7 @@ configure_file(${PROJECT_SOURCE_DIR}/setup.py ${PROJECT_BINARY_DIR}/cython/setup
 # 10. Build Cython wrapper (CMake tracks the dependecy to link with GTSAM through our project's static library)
 wrap_and_install_library_cython("gtsam_example.h" # interface_header
                                 "" # extra imports
-                                "./${PROJECT_NAME}" # install path
+                                "${PROJECT_BINARY_DIR}/cython/${PROJECT_NAME}" # install path
                                 "gtsam;${PROJECT_NAME}"  # library to link with
                                 "wrap;gtsam"  # dependencies which need to be built before wrapping
                                 )
