@@ -7,7 +7,14 @@ project(gtsam_example CXX C)
 
 ###################################################################################
 # 2. Set the python version
-set(GTSAM_PYTHON_VERSION "3.6")
+set(GTSAM_PYTHON_VERSION "Default" CACHE STRING "The Python version to use for wrapping")
+if(GTSAM_PYTHON_VERSION STREQUAL "Default")
+  find_package(PythonInterp REQUIRED)
+  find_package(PythonLibs REQUIRED)
+else()
+  find_package(PythonInterp ${GTSAM_PYTHON_VERSION} EXACT REQUIRED)
+  find_package(PythonLibs ${GTSAM_PYTHON_VERSION} EXACT REQUIRED)
+endif()
 
 ###################################################################################
 # 3. Find GTSAM components so we have access to the GTSAM Cython install path
