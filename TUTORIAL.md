@@ -121,4 +121,4 @@ Finally, we go into the generated `cython` directory where the `setup.py` file i
 
 # Installing
 
-To install the package, in the `cython` directory we can run `python setup.py build`.
+To install the package, in the `cython` directory we can run `python setup.py install`.

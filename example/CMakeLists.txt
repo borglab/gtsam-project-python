@@ -1,13 +1,20 @@
 # This file should be used as a template for creating new projects with Python wrapping using the CMake tools
 
 ###################################################################################
-# 1. To create your own project, replace "example" with the actual name of your project
+# 1. To create your own project, replace "gtsam_example" with the actual name of your project
 cmake_minimum_required(VERSION 3.0)
-project(example CXX C)
+project(gtsam_example CXX C)
 
 ###################################################################################
 # 2. Set the python version
-set(GTSAM_PYTHON_VERSION "3.6")
+set(GTSAM_PYTHON_VERSION "Default" CACHE STRING "The Python version to use for wrapping")
+if(GTSAM_PYTHON_VERSION STREQUAL "Default")
+  find_package(PythonInterp REQUIRED)
+  find_package(PythonLibs REQUIRED)
+else()
+  find_package(PythonInterp ${GTSAM_PYTHON_VERSION} EXACT REQUIRED)
+  find_package(PythonLibs ${GTSAM_PYTHON_VERSION} EXACT REQUIRED)
+endif()
 
 ###################################################################################
 # 3. Find GTSAM components so we have access to the GTSAM Cython install path
@@ -63,9 +70,9 @@ configure_file(${PROJECT_SOURCE_DIR}/setup.py ${PROJECT_BINARY_DIR}/cython/setup
 
 ###################################################################################
 # 10. Build Cython wrapper (CMake tracks the dependecy to link with GTSAM through our project's static library)
-wrap_and_install_library_cython("example.h" # interface_header
+wrap_and_install_library_cython("gtsam_example.h" # interface_header
                                 "" # extra imports
-                                "./${PROJECT_NAME}" # install path
+                                "${PROJECT_BINARY_DIR}/cython/${PROJECT_NAME}" # install path
                                 "gtsam;${PROJECT_NAME}"  # library to link with
                                 "wrap;gtsam"  # dependencies which need to be built before wrapping
                                 )
