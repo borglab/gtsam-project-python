@@ -1,12 +1,10 @@
 /* ----------------------------------------------------------------------------
-
  * GTSAM Copyright 2010, Georgia Tech Research Corporation,
  * Atlanta, Georgia 30332-0415
  * All Rights Reserved
  * Authors: Frank Dellaert, et al. (see THANKS for the full author list)
-
+ * 
  * See LICENSE for the license information
-
  * -------------------------------------------------------------------------- */
 
 /**
@@ -21,12 +19,13 @@
 #include <src/greeting.h>
 
 // The namespace should be the same as in the c++ source code.
-namespace example {
+namespace gtsam_example {
 
 class Greeting {
   Greeting();
   void sayHello() const;
+  gtsam::Rot3 invertRot3(gtsam::Rot3 rot) const;
   void sayGoodbye() const;
 };
 
-}  // namespace example
+}  // namespace gtsam_example

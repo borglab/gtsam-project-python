@@ -4,6 +4,7 @@
 # 1. To create your own project, replace "gtsam_example" with the actual name of your project
 cmake_minimum_required(VERSION 3.0)
 project(gtsam_example CXX C)
+set(CXX_STANDARD 11)
 
 ###################################################################################
 # 2. Set the python version
@@ -34,7 +35,6 @@ include_directories(${GTSAM_EIGENCY_INSTALL_PATH})
 find_package(GTSAMCMakeTools CONFIG)
 #include(GtsamBuildTypes) # Load build type flags and default to Debug mode
 #include(GtsamTesting)    # Easy functions for creating unit tests and scripts
-include(GtsamCythonWrap) # Automatic Cython wrapper generation
 
 ###################################################################################
 # 5. Add the local source directory for CMake
@@ -69,10 +69,13 @@ configure_file(${PROJECT_SOURCE_DIR}/__init__.py.in ${PROJECT_BINARY_DIR}/cython
 configure_file(${PROJECT_SOURCE_DIR}/setup.py ${PROJECT_BINARY_DIR}/cython/setup.py COPYONLY)
 
 ###################################################################################
-# 10. Build Cython wrapper (CMake tracks the dependecy to link with GTSAM through our project's static library)
-wrap_and_install_library_cython("gtsam_example.h" # interface_header
-                                "" # extra imports
-                                "${PROJECT_BINARY_DIR}/cython/${PROJECT_NAME}" # install path
-                                "gtsam;${PROJECT_NAME}"  # library to link with
-                                "wrap;gtsam"  # dependencies which need to be built before wrapping
-                                )
+# 10. Build Pybind wrapper
+set(GTSAM_EXAMPLE_VERSION_STRING 0.0.1) # Needed for generating setup.py
+
+if(GTSAM_EXAMPLE_BUILD_PYTHON)
+	# if (NOT GTSAM_TYPEDEF_POINTS_TO_VECTORS)
+	# 	message(FATAL_ERROR "GTSAM_EXAMPLE_BUILD_PYTHON requires GTSAM_TYPEDEF_POINTS_TO_VECTORS to be enabled but it is not.")
+	# endif()
+	set(GTSAM_EXAMPLE_PY_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/python")
+endif()
+add_subdirectory(python)
