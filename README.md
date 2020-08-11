@@ -12,7 +12,7 @@ Project template using GTSAM + python wrapping
   - You can do this on the command line as follows:
 
     ```sh
-    cmake -GTSAM_INSTALL_CYTHON_TOOLBOX=ON -DGTSAM_PYTHON_VERSION=3 ..
+    cmake -DGTSAM_INSTALL_CYTHON_TOOLBOX=ON -DGTSAM_PYTHON_VERSION=3 ..
     ```
 
 ## INSTALL
