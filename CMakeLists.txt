@@ -57,6 +57,7 @@ install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib 
 
 ###################################################################################
 # 10. Build Pybind wrapper
+option(GTSAM_EXAMPLE_BUILD_PYTHON "Build the Python wrapper" ON)
 set(GTSAM_EXAMPLE_VERSION_STRING 0.0.1) # Needed for generating setup.py
 
 if(GTSAM_EXAMPLE_BUILD_PYTHON)
