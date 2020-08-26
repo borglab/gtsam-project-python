@@ -12,18 +12,18 @@ import unittest
 
 import numpy as np
 
+import gtsam
 import gtsam_example
 from gtsam.utils.test_case import GtsamTestCase
 
 
-class TestCal3Unified(GtsamTestCase):
+class TestExample(GtsamTestCase):
 
     def test_Hello(self):
         g = gtsam_example.Greeting()
         g.sayHello()
 
     def test_invertRot3(self):
-        import gtsam
         g = gtsam_example.Greeting()
         r = gtsam.Rot3()
         g.invertRot3(r)
