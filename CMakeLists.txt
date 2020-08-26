@@ -62,18 +62,17 @@ install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib 
 # gtsamAddExamplesGlob("*.cpp" "" "${PROJECT_NAME}")
 
 ###################################################################################
-# 8. Set the version string
-set(GTSAM_VERSION_STRING 0.0.1) # Needed for generating setup.py
-
-###################################################################################
-# 9. Add the path to the wrap/cmake directory and include the cmake code for wrapping.
+# 8. Add the path to the wrap/cmake directory and include the cmake code for wrapping.
 # Please update this accordingly so it points to the wrap subtree and
 # the cmake subdirectory in particular.
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/wrap/cmake")
 include(PybindWrap)
 
 ###################################################################################
-# 10. Configure all the files for the Python module.
+# 9. Configure all the files for the Python module.
+# Set the version string
+set(GTSAM_VERSION_STRING 0.0.1) # Needed for generating setup.py
+
 # We use this as a convenience variable.
 # It points to `build/gtsam_example` in this case.
 set(GTSAM_MODULE_PATH ${PROJECT_BINARY_DIR}/${PROJECT_NAME})
@@ -100,10 +99,10 @@ DESTINATION "${GTSAM_MODULE_PATH}")
 # if (NOT GTSAM_TYPEDEF_POINTS_TO_VECTORS)
 # 	message(FATAL_ERROR "GTSAM_EXAMPLE_BUILD_PYTHON requires GTSAM_TYPEDEF_POINTS_TO_VECTORS to be enabled but it is not.")
 # endif()
-set(GTSAM_EXAMPLE_PY_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/python")
+# set(GTSAM_EXAMPLE_PY_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/python")
 
 ###################################################################################
-# 11. Build Pybind wrapper
+# 10. Build Pybind wrapper
 # This is where the crux of the wrapping happens.
 
 # Ignoring the non-concrete types (type aliases and typedefs).
@@ -119,7 +118,6 @@ pybind_wrap(${PROJECT_NAME}_py # target
             "${ignore}" # ignore classes
             ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl
             ${PROJECT_NAME} # libs
-            # "${PROJECT_NAME};${PROJECT_NAME}_header" # dependencies
             "${PROJECT_NAME}" # dependencies, we need the library built in step 6 as the minimum.
           )
 
@@ -133,7 +131,7 @@ set_target_properties(${PROJECT_NAME}_py PROPERTIES
         )
 
 ###################################################################################
-# 12. Python install command
+# 11. Python install command
 # Finally we add a custom make command which we can invoke to install the generated module.
 # Simply type `make python-install` and we can now access the wrapped module as an installed library.
 add_custom_target(python-install
