@@ -25,10 +25,6 @@ find_package(GTSAM REQUIRED) # Uses installed package
 # to call include_directories(), just target_link_libraries(NAME gtsam)
 #include_directories(${GTSAM_INCLUDE_DIR})
 
-# Include the required GTSAM Cython libraries
-include_directories(${GTSAM_CYTHON_INSTALL_PATH})
-include_directories(${GTSAM_EIGENCY_INSTALL_PATH})
-
 ###################################################################################
 # 4. Get the wrapping functions
 # Include GTSAM CMake tools
@@ -60,19 +56,11 @@ install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib 
 # gtsamAddExamplesGlob("*.cpp" "" "${PROJECT_NAME}")
 
 ###################################################################################
-# 8. Copy the __init__.py file so Cython recognizes this as a package.
-# This function also updates the contents to use the correct package name.
-configure_file(${PROJECT_SOURCE_DIR}/__init__.py.in ${PROJECT_BINARY_DIR}/cython/${PROJECT_NAME}/__init__.py)
-
-###################################################################################
-# 9. (Strict) Copy over the setup.py file so we can build and install the package.
-configure_file(${PROJECT_SOURCE_DIR}/setup.py ${PROJECT_BINARY_DIR}/cython/setup.py COPYONLY)
-
-###################################################################################
 # 10. Build Pybind wrapper
 set(GTSAM_EXAMPLE_VERSION_STRING 0.0.1) # Needed for generating setup.py
 
 if(GTSAM_EXAMPLE_BUILD_PYTHON)
+  list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/wrap/cmake")
 	# if (NOT GTSAM_TYPEDEF_POINTS_TO_VECTORS)
 	# 	message(FATAL_ERROR "GTSAM_EXAMPLE_BUILD_PYTHON requires GTSAM_TYPEDEF_POINTS_TO_VECTORS to be enabled but it is not.")
 	# endif()
