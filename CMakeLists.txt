@@ -8,14 +8,16 @@ set(CXX_STANDARD 11)
 
 ###################################################################################
 # 2. Set the python version
-set(GTSAM_PYTHON_VERSION "3.8" CACHE STRING "The Python version to use for wrapping")
-set(WRAP_PYTHON_VERSION ${GTSAM_PYTHON_VERSION})
-if(GTSAM_PYTHON_VERSION STREQUAL "Default")
+# Load the default Python version strings
+find_package (Python COMPONENTS Interpreter Development)
+
+set(WRAP_PYTHON_VERSION "${Python_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" CACHE STRING "The Python version to use for wrapping")
+if(WRAP_PYTHON_VERSION STREQUAL "${Python_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
   find_package(PythonInterp REQUIRED)
   find_package(PythonLibs REQUIRED)
 else()
-  find_package(PythonInterp ${GTSAM_PYTHON_VERSION} EXACT REQUIRED)
-  find_package(PythonLibs ${GTSAM_PYTHON_VERSION} EXACT REQUIRED)
+  find_package(PythonInterp ${WRAP_PYTHON_VERSION} EXACT REQUIRED)
+  find_package(PythonLibs ${WRAP_PYTHON_VERSION} EXACT REQUIRED)
 endif()
 
 ###################################################################################
