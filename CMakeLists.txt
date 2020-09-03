@@ -45,8 +45,8 @@ include_directories(BEFORE "${PROJECT_SOURCE_DIR}")
 # This is a common cmake step where we load all the source files
 # and link against the GTSAM library.
 add_library(${PROJECT_NAME} SHARED
-              src/greeting.h
-              src/greeting.cpp)
+              cpp/greeting.h
+              cpp/greeting.cpp)
 target_link_libraries(${PROJECT_NAME} gtsam)
 
 ###################################################################################
@@ -74,17 +74,17 @@ include(PybindWrap)
 set(GTSAM_VERSION_STRING 0.0.1) # Needed for generating setup.py
 
 # We use this as a convenience variable.
-# It points to `build/gtsam_example` in this case.
-set(GTSAM_MODULE_PATH ${PROJECT_BINARY_DIR}/${PROJECT_NAME})
+# It points to `python/` in this case.
+set(GTSAM_MODULE_PATH ${PROJECT_SOURCE_DIR}/python)
 
 # Copy over the setup.py file.
-# This is now `build/gtsam_example/setup.py`.
-configure_file(${PROJECT_SOURCE_DIR}/python/setup.py.in
+# This is now `python/setup.py`.
+configure_file(${PROJECT_SOURCE_DIR}/setup.py.in
                ${GTSAM_MODULE_PATH}/setup.py)
 
 # Copy over the __init__.py file.
-# This is now `build/gtsam_example/gtsam_example/__init__.py`.
-configure_file(${PROJECT_SOURCE_DIR}/python/__init__.py.in
+# This is now `python/gtsam_example/__init__.py`.
+configure_file(${PROJECT_SOURCE_DIR}/__init__.py.in
                ${GTSAM_MODULE_PATH}/${PROJECT_NAME}/__init__.py)
 
 # Copy over the pybind .tpl file.

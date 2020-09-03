@@ -16,7 +16,7 @@
 // This is an interface file for automatic Python wrapper generation.
 // See gtsam.h for full documentation and more examples.
 
-#include <src/greeting.h>
+#include <cpp/greeting.h>
 
 // The namespace should be the same as in the c++ source code.
 namespace gtsam_example {
