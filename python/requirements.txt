@@ -1,2 +1,3 @@
 numpy>=1.11.0
 pyparsing>=2.4.2
+gtsam>=4.1
