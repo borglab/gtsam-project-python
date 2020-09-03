@@ -87,9 +87,9 @@ configure_file(${PROJECT_SOURCE_DIR}/python/setup.py.in
 configure_file(${PROJECT_SOURCE_DIR}/python/__init__.py.in
                ${GTSAM_MODULE_PATH}/${PROJECT_NAME}/__init__.py)
 
-# Copy over the example pybind .tpl file from the wrap subtree.
+# Copy over the pybind .tpl file.
 # This is now `build/gtsam_example.tpl`.
-configure_file(${PROJECT_SOURCE_DIR}/wrap/pybind_wrapper.tpl.example
+configure_file(${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.tpl
                ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl)
 
 # Copy all the tests files to module folder.
