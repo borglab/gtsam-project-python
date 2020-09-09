@@ -119,6 +119,7 @@ pybind_wrap(${PROJECT_NAME}_py # target
             ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl
             ${PROJECT_NAME} # libs
             "${PROJECT_NAME}" # dependencies, we need the library built in step 6 as the minimum.
+            ON # use_boost
           )
 
 # We define where we wish to save the wrapped .so file once we run `make`.
@@ -136,5 +137,5 @@ set_target_properties(${PROJECT_NAME}_py PROPERTIES
 # Simply type `make python-install` and we can now access the wrapped module as an installed library.
 add_custom_target(python-install
         COMMAND ${PYTHON_EXECUTABLE} ${GTSAM_MODULE_PATH}/setup.py install
-        DEPENDS gtsam_example_py
+        DEPENDS ${PROJECT_NAME}_py
         WORKING_DIRECTORY ${GTSAM_MODULE_PATH})
