@@ -89,7 +89,7 @@ configure_file(${PROJECT_SOURCE_DIR}/python/__init__.py.in
 
 # Copy over the example pybind .tpl file from the wrap subtree.
 # This is now `build/gtsam_example.tpl`.
-configure_file(${PROJECT_SOURCE_DIR}/wrap/pybind_wrapper.tpl.example
+configure_file(${PROJECT_SOURCE_DIR}/python/pybind_wrapper.tpl.example
                ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl)
 
 # Copy all the tests files to module folder.
@@ -119,6 +119,7 @@ pybind_wrap(${PROJECT_NAME}_py # target
             ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl
             ${PROJECT_NAME} # libs
             "${PROJECT_NAME}" # dependencies, we need the library built in step 6 as the minimum.
+            ON # we are using boost::shared_ptr not std
           )
 
 # We define where we wish to save the wrapped .so file once we run `make`.
@@ -136,5 +137,5 @@ set_target_properties(${PROJECT_NAME}_py PROPERTIES
 # Simply type `make python-install` and we can now access the wrapped module as an installed library.
 add_custom_target(python-install
         COMMAND ${PYTHON_EXECUTABLE} ${GTSAM_MODULE_PATH}/setup.py install
-        DEPENDS gtsam_example_py
+        DEPENDS ${PROJECT_NAME}_py
         WORKING_DIRECTORY ${GTSAM_MODULE_PATH})
