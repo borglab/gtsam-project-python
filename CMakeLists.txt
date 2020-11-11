@@ -77,29 +77,31 @@ set(GTSAM_VERSION_STRING 0.0.1) # Needed for generating setup.py
 # It points to `python/` in this case.
 set(GTSAM_MODULE_PATH ${PROJECT_SOURCE_DIR}/python)
 
-# Copy over the setup.py file.
-# This is now `python/setup.py`.
-configure_file(${PROJECT_SOURCE_DIR}/setup.py.in
+# Copy over the setup.py.in file.
+# This will become `python/setup.py`.
+configure_file(${PROJECT_SOURCE_DIR}/wrapper/setup.py.in
                ${GTSAM_MODULE_PATH}/setup.py)
 
 # Copy over the __init__.py file.
 # This is now `python/gtsam_example/__init__.py`.
-configure_file(${PROJECT_SOURCE_DIR}/__init__.py.in
+configure_file(${PROJECT_SOURCE_DIR}/wrapper/__init__.py.in
                ${GTSAM_MODULE_PATH}/${PROJECT_NAME}/__init__.py)
 
 # Copy over the pybind .tpl file.
 # This is now `build/gtsam_example.tpl`.
-configure_file(${PROJECT_SOURCE_DIR}/python/pybind_wrapper.tpl.example
+configure_file(${PROJECT_SOURCE_DIR}/wrap/pybind_wrapper.tpl.example
                ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl)
+
+# Copy over C++ headers to use for wrapping
+file(COPY "${PROJECT_SOURCE_DIR}/wrapper/preamble.h"
+     DESTINATION "${PROJECT_BINARY_DIR}/python")
+
+file(COPY "${PROJECT_SOURCE_DIR}/wrapper/specializations.h"
+     DESTINATION "${PROJECT_BINARY_DIR}/python")
 
 # Copy all the tests files to module folder.
 file(COPY "${PROJECT_SOURCE_DIR}/python/tests"
-DESTINATION "${GTSAM_MODULE_PATH}")
-
-# if (NOT GTSAM_TYPEDEF_POINTS_TO_VECTORS)
-# 	message(FATAL_ERROR "GTSAM_EXAMPLE_BUILD_PYTHON requires GTSAM_TYPEDEF_POINTS_TO_VECTORS to be enabled but it is not.")
-# endif()
-# set(GTSAM_EXAMPLE_PY_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/python")
+     DESTINATION "${GTSAM_MODULE_PATH}")
 
 ###################################################################################
 # 10. Build Pybind wrapper
