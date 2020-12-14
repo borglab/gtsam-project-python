@@ -65,7 +65,7 @@ install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib 
 ###################################################################################
 # 8. Find the gtwrap package (either installed via GTSAM or as a standalone package) and
 # include the cmake code for wrapping.
-find_package(gtwrap)
+find_package(gtwrap REQUIRED)
 include(PybindWrap)
 
 ###################################################################################
