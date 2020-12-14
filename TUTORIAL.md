@@ -45,9 +45,8 @@ The files are
     - `setup.py.in`: Template file for `setup.py`.
     - `specializations.h`:
 2. `src/`: All your C++ source code goes here.
-3. `wrap`: The BORGLab `wrap` repository, added as a git subtree.
-4. `CMakeLists.txt`: The cmake definition file.
-5. `<project>.h`: The header file which specifies all the code components to be wrapped.
+3. `CMakeLists.txt`: The cmake definition file.
+4. `<project>.h`: The header file which specifies all the code components to be wrapped.
 
 You can add the `wrap` repository by running the file `update_wrap.sh`.
 
@@ -92,12 +91,13 @@ An illustrative example is provided in the `src` directory of this repository.
     install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib RUNTIME DESTINATION bin)
     ```
 
-8. Now we get to the wrapping part. We first need to include the CMake code for the Pybind wrapper. This exists in the `wrap/cmake` directory and can be added as:
+8. Now we get to the wrapping part. We first need to find the `gtwrap` package which contains the code for wrapping, and we need to include the CMake code for the Pybind wrapper.
 
     ```cmake
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/wrap/cmake")
+    find_package(gtwrap REQUIRED)
     include(PybindWrap)
     ```
+
 9. Next, to specify our project as a package, we need to include some files and metafiles, such as an `__init__.py` file at the top level and a `setup.py` file to install the wrapped code correctly. We also need a Pybind11 template file so that the wrapper can generate the C++ file that will be used by Pybind11 to generate the wrapped .so file.
 
     We can use the basic `__init__.py.in`, `setup.py.in`, and `pybind_wrapper.tpl.example` templates in this repo for convenience. Please adjust them as you see fit.
@@ -114,15 +114,15 @@ An illustrative example is provided in the `src` directory of this repository.
 
         # Add the setup.py file
         configure_file(${PROJECT_SOURCE_DIR}/python/setup.py.in
-                ${GTSAM_MODULE_PATH}/setup.py)
+                       ${GTSAM_MODULE_PATH}/setup.py)
         
         # Add the __init__.py file
         configure_file(${PROJECT_SOURCE_DIR}/python/__init__.py.in
-                ${GTSAM_MODULE_PATH}/${PROJECT_NAME}/__init__.py)
+                       ${GTSAM_MODULE_PATH}/${PROJECT_NAME}/__init__.py)
 
         # Add the Pybind11 template file.
         configure_file(${PROJECT_SOURCE_DIR}/wrap/pybind_wrapper.tpl.example
-                ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl)
+                       ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl)
         
         ```
 
