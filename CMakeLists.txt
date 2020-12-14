@@ -11,8 +11,9 @@ set(CXX_STANDARD 11)
 # Load the default Python version strings
 find_package (Python COMPONENTS Interpreter Development)
 
-set(WRAP_PYTHON_VERSION "${Python_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" CACHE STRING "The Python version to use for wrapping")
-if(WRAP_PYTHON_VERSION STREQUAL "${Python_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
+set(WRAP_PYTHON_VERSION "${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}"
+    CACHE STRING "The Python version to use for wrapping")
+if(WRAP_PYTHON_VERSION STREQUAL "${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}")
   find_package(PythonInterp REQUIRED)
   find_package(PythonLibs REQUIRED)
 else()
@@ -62,16 +63,16 @@ install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib 
 # gtsamAddExamplesGlob("*.cpp" "" "${PROJECT_NAME}")
 
 ###################################################################################
-# 8. Add the path to the wrap/cmake directory and include the cmake code for wrapping.
-# Please update this accordingly so it points to the wrap subtree and
-# the cmake subdirectory in particular.
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/wrap/cmake")
+# 8. Find the gtwrap package (either installed via GTSAM or as a standalone package) and
+# include the cmake code for wrapping.
+find_package(gtwrap)
 include(PybindWrap)
 
 ###################################################################################
 # 9. Configure all the files for the Python module.
 # Set the version string
-set(GTSAM_VERSION_STRING 0.0.1) # Needed for generating setup.py
+# Needed for generating setup.py
+set(GTSAM_VERSION_STRING 0.0.1)
 
 # We use this as a convenience variable.
 # It points to `python/` in this case.
@@ -89,7 +90,7 @@ configure_file(${PROJECT_SOURCE_DIR}/wrapper/__init__.py.in
 
 # Copy over the pybind .tpl file.
 # This is now `build/gtsam_example.tpl`.
-configure_file(${PROJECT_SOURCE_DIR}/wrap/pybind_wrapper.tpl.example
+configure_file(${PROJECT_SOURCE_DIR}/wrapper/pybind_wrapper.tpl.example
                ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl)
 
 # Copy over C++ headers to use for wrapping
