@@ -12,7 +12,7 @@ Project template using GTSAM + Python wrapping
   - You can do this on the command line as follows:
 
     ```sh
-    cmake -GTSAM_BUILD_PYTHON=ON -DGTSAM_PYTHON_VERSION=3.7 ..
+    cmake -DGTSAM_BUILD_PYTHON=ON -DGTSAM_PYTHON_VERSION=3.7 ..
     ```
 
 ## INSTALL
