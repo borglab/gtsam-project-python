@@ -64,19 +64,13 @@ An illustrative example is provided in the `src` directory of this repository.
     find_package(GTSAM REQUIRED)
     ```
 
- 4. The second package is `GTSAMCMakeTools`. This gives us access to variables and functions which we will use later on.
-
-    ```cmake
-    find_package(GTSAMCMakeTools CONFIG)
-    ```
-
-5. These next few steps should be familiar for CMake users. We first include the project source directory.
+4. These next few steps should be familiar for CMake users. We first include the project source directory.
 
     ```cmake
     include_directories(BEFORE "${PROJECT_SOURCE_DIR}")
     ```
 
-6. Now we can specify the building and linking of our project code as a shared library.
+5. Now we can specify the building and linking of our project code as a shared library.
 
     ```cmake
     add_library(${PROJECT_NAME} SHARED
@@ -85,20 +79,19 @@ An illustrative example is provided in the `src` directory of this repository.
     target_link_libraries(${PROJECT_NAME} gtsam)
     ```
 
-7. And finally, we can install the shared library.
+6. And finally, we can install the shared library.
 
     ```cmake
     install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib RUNTIME DESTINATION bin)
     ```
 
-8. Now we get to the wrapping part. We first need to find the `gtwrap` package which contains the code for wrapping, and we need to include the CMake code for the Pybind wrapper.
+7. Now we get to the wrapping part. We simply need to find the `gtwrap` package which contains the code for wrapping, and this will automatically include the CMake code for the Pybind wrapper.
 
     ```cmake
     find_package(gtwrap REQUIRED)
-    include(PybindWrap)
     ```
 
-9. Next, to specify our project as a package, we need to include some files and metafiles, such as an `__init__.py` file at the top level and a `setup.py` file to install the wrapped code correctly. We also need a Pybind11 template file so that the wrapper can generate the C++ file that will be used by Pybind11 to generate the wrapped .so file.
+8. Next, to specify our project as a package, we need to include some files and metafiles, such as an `__init__.py` file at the top level and a `setup.py` file to install the wrapped code correctly. We also need a Pybind11 template file so that the wrapper can generate the C++ file that will be used by Pybind11 to generate the wrapped .so file.
 
     We can use the basic `__init__.py.in`, `setup.py.in`, and `pybind_wrapper.tpl.example` templates in this repo for convenience. Please adjust them as you see fit.
 
@@ -134,7 +127,7 @@ An illustrative example is provided in the `src` directory of this repository.
              DESTINATION "${GTSAM_MODULE_PATH}")
         ```
 
-10. We now specify the wrapping function so that the GTSAM wrapper can do its job. We require only one function `pybind_wrap` which takes the following 9 arguments:
+9. We now specify the wrapping function so that the GTSAM wrapper can do its job. We require only one function `pybind_wrap` which takes the following 9 arguments:
 
     1. Target: The name of the make target with which the wrapping process is associated.
     2. Interface Header: A `.h` (or `.i`) file which defines what classes, functions, etc., are to be wrapped.
@@ -170,7 +163,7 @@ An illustrative example is provided in the `src` directory of this repository.
         )
         ```
 
-11. Finally, we add a custom `make` command to make (pun unintended) installing the generated python package super easy.
+10. Finally, we add a custom `make` command to make (pun unintended) installing the generated python package super easy.
 
     ```cmake
     add_custom_target(python-install
