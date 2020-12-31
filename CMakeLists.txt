@@ -4,7 +4,7 @@
 # ##############################################################################
 # * 1. To create your own project, replace "gtsam_example" with the actual name
 #   of your project
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.9)
 project(gtsam_example CXX C)
 set(CXX_STANDARD 11)
 
@@ -89,6 +89,14 @@ file(COPY "${PROJECT_SOURCE_DIR}/wrapper/specializations.h"
 # Copy all the tests files to module folder.
 file(COPY "${PROJECT_SOURCE_DIR}/python/tests"
      DESTINATION "${GTSAM_MODULE_PATH}")
+
+# We print out our configuration for an easy visual check
+message("========== Configuration Options ==========")
+message(STATUS "Project:                  ${PROJECT_NAME}")
+message(STATUS "Python Version:           ${WRAP_PYTHON_VERSION}")
+message(STATUS "Python Module Path:       ${GTSAM_MODULE_PATH}")
+message("===========================================")
+
 
 # ##############################################################################
 # * 9. Build Pybind wrapper This is where the crux of the wrapping happens.
