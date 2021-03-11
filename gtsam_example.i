@@ -23,9 +23,12 @@ namespace gtsam_example {
 
 class Greeting {
   Greeting();
+  gtsam::noiseModel::Base* model;
+
   void sayHello() const;
   gtsam::Rot3 invertRot3(gtsam::Rot3 rot) const;
   void sayGoodbye() const;
+  Matrix getMatrix(gtsam::noiseModel::Base* model) const;
 };
 
 }  // namespace gtsam_example
