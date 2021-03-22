@@ -26,6 +26,7 @@ class Greeting {
   gtsam::noiseModel::Base* model;
 
   void sayHello() const;
+  void takeAPose3(const gtsam::Pose3& pose) const;
   gtsam::Rot3 invertRot3(gtsam::Rot3 rot) const;
   void sayGoodbye() const;
   Matrix getMatrix(gtsam::noiseModel::Base* model) const;

@@ -1,4 +1,4 @@
-#include <gtsam/geometry/Rot3.h>
+#include <gtsam/geometry/Pose3.h>
 #include <gtsam/linear/NoiseModel.h>
 
 #include <iostream>
@@ -13,6 +13,8 @@ class Greeting {
 
   /// Print a greeting
   void sayHello() const;
+
+  void takeAPose3(const gtsam::Pose3& pose) const;
 
   /// Process a GTSAM object
   gtsam::Rot3 invertRot3(gtsam::Rot3 rot) const;

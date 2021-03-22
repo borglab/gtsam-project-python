@@ -64,7 +64,7 @@ gtwrap_get_python_version(${WRAP_PYTHON_VERSION})
 set(GTSAM_VERSION_STRING 0.0.1)
 
 # We use this as a convenience variable. It points to `python/` in this case.
-set(GTSAM_MODULE_PATH ${PROJECT_SOURCE_DIR}/python)
+set(GTSAM_MODULE_PATH ${PROJECT_BINARY_DIR}/python)
 
 # Copy over the setup.py.in file. This will become `python/setup.py`.
 configure_file(${PROJECT_SOURCE_DIR}/wrapper/setup.py.in
@@ -108,8 +108,8 @@ set(ignore "")
 # This is the main function that generates the cpp file which Pybind11 will use.
 pybind_wrap(
   ${PROJECT_NAME}_py # target
-  ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.h # interface header file
-                                          # (gtsam_example.h in the root
+  ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.i # interface header file
+                                          # (gtsam_example.i in the root
                                           # directory)
   "${PROJECT_NAME}.cpp" # the generated cpp (gtsam_example.cpp)
   "${PROJECT_NAME}" # module_name (gtsam_example)
