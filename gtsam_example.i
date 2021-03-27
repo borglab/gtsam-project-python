@@ -3,7 +3,7 @@
  * Atlanta, Georgia 30332-0415
  * All Rights Reserved
  * Authors: Frank Dellaert, et al. (see THANKS for the full author list)
- * 
+ *
  * See LICENSE for the license information
  * -------------------------------------------------------------------------- */
 
@@ -30,6 +30,11 @@ class Greeting {
   gtsam::Rot3 invertRot3(gtsam::Rot3 rot) const;
   void sayGoodbye() const;
   Matrix getMatrix(gtsam::noiseModel::Base* model) const;
+
+  string operator()(const string& name) const;
+
+  void insertName(const string& name);
+  string operator[](size_t idx) const;
 };
 
 }  // namespace gtsam_example
