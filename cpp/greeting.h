@@ -1,3 +1,5 @@
+#pragma once
+
 #include <gtsam/geometry/Pose3.h>
 #include <gtsam/linear/NoiseModel.h>
 
@@ -36,6 +38,10 @@ class Greeting {
   void insertName(const std::string& name) { names_.push_back(name); }
 
   std::string operator[](size_t idx) const { return this->names_[idx]; }
+
+  void print() const {
+    std::cout << "This is a greeting" << std::endl;
+  }
 };
 
 }  // namespace gtsam_example

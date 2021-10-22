@@ -35,6 +35,8 @@ class Greeting {
 
   void insertName(const string& name);
   string operator[](size_t idx) const;
+
+  void print() const;
 };
 
 }  // namespace gtsam_example

@@ -24,7 +24,8 @@ include_directories(BEFORE "${PROJECT_SOURCE_DIR}")
 # ##############################################################################
 # * 4. Build static library from common sources. This is a common cmake step
 #   where we load all the source files and link against the GTSAM library.
-add_library(${PROJECT_NAME} SHARED cpp/greeting.h cpp/greeting.cpp)
+add_library(${PROJECT_NAME} SHARED cpp/greeting.h cpp/greeting.cpp
+                                   cpp/sub_dir/curse.h cpp/sub_dir/curse.cpp)
 target_link_libraries(${PROJECT_NAME} gtsam)
 
 # ##############################################################################
@@ -97,7 +98,6 @@ message(STATUS "Python Version:           ${WRAP_PYTHON_VERSION}")
 message(STATUS "Python Module Path:       ${GTSAM_MODULE_PATH}")
 message("===========================================")
 
-
 # ##############################################################################
 # * 9. Build Pybind wrapper This is where the crux of the wrapping happens.
 
@@ -106,11 +106,13 @@ message("===========================================")
 set(ignore "")
 
 # This is the main function that generates the cpp file which Pybind11 will use.
+set(interface_list ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.i
+                   ${PROJECT_SOURCE_DIR}/cpp/sub_dir/sub_dir.i)
+
 pybind_wrap(
   ${PROJECT_NAME}_py # target
-  ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.i # interface header file
-                                          # (gtsam_example.i in the root
-                                          # directory)
+  "${interface_list}" # interface header files (gtsam_example.i in the root
+                      # directory)
   "${PROJECT_NAME}.cpp" # the generated cpp (gtsam_example.cpp)
   "${PROJECT_NAME}" # module_name (gtsam_example)
   "${PROJECT_NAME}" # top namespace in the cpp file (gtsam_example)
@@ -128,6 +130,7 @@ pybind_wrap(
 set_target_properties(
   ${PROJECT_NAME}_py
   PROPERTIES OUTPUT_NAME "${PROJECT_NAME}"
+             LINKER_LANGUAGE CXX
              LIBRARY_OUTPUT_DIRECTORY "${GTSAM_MODULE_PATH}/${PROJECT_NAME}"
              DEBUG_POSTFIX "" # Otherwise you will have a wrong name
              RELWITHDEBINFO_POSTFIX "" # Otherwise you will have a wrong name
