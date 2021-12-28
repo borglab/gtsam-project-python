@@ -65,16 +65,16 @@ gtwrap_get_python_version(${WRAP_PYTHON_VERSION})
 set(GTSAM_VERSION_STRING 0.0.1)
 
 # We use this as a convenience variable. It points to `python/` in this case.
-set(GTSAM_MODULE_PATH ${PROJECT_BINARY_DIR}/python)
+set(PROJECT_PY_MODULE_PATH ${PROJECT_BINARY_DIR}/python)
 
 # Copy over the setup.py.in file. This will become `python/setup.py`.
 configure_file(${PROJECT_SOURCE_DIR}/wrapper/setup.py.in
-               ${GTSAM_MODULE_PATH}/setup.py)
+               ${PROJECT_PY_MODULE_PATH}/setup.py)
 
 # Copy over the __init__.py file. This is now
 # `python/gtsam_example/__init__.py`.
 configure_file(${PROJECT_SOURCE_DIR}/wrapper/__init__.py.in
-               ${GTSAM_MODULE_PATH}/${PROJECT_NAME}/__init__.py)
+               ${PROJECT_PY_MODULE_PATH}/${PROJECT_NAME}/__init__.py)
 
 # Copy over the pybind .tpl file. This is now `build/gtsam_example.tpl`.
 configure_file(${PROJECT_SOURCE_DIR}/wrapper/pybind_wrapper.tpl.example
@@ -89,22 +89,22 @@ foreach(interface ${interface_list})
   get_filename_component(interface_name ${interface} NAME_WE)
 
   file(COPY "${PROJECT_SOURCE_DIR}/wrapper/preamble/${interface_name}.h"
-       DESTINATION "${GTSAM_MODULE_PATH}/${PROJECT_NAME}/preamble")
+       DESTINATION "${PROJECT_PY_MODULE_PATH}/${PROJECT_NAME}/preamble")
 
   file(COPY "${PROJECT_SOURCE_DIR}/wrapper/specializations/${interface_name}.h"
-       DESTINATION "${GTSAM_MODULE_PATH}/${PROJECT_NAME}/specializations")
+       DESTINATION "${PROJECT_PY_MODULE_PATH}/${PROJECT_NAME}/specializations")
 
 endforeach()
 
 # Copy all the tests files to module folder.
 file(COPY "${PROJECT_SOURCE_DIR}/python/tests"
-     DESTINATION "${GTSAM_MODULE_PATH}")
+     DESTINATION "${PROJECT_PY_MODULE_PATH}")
 
 # We print out our configuration for an easy visual check
 message("========== Configuration Options ==========")
 message(STATUS "Project:                  ${PROJECT_NAME}")
 message(STATUS "Python Version:           ${WRAP_PYTHON_VERSION}")
-message(STATUS "Python Module Path:       ${GTSAM_MODULE_PATH}")
+message(STATUS "Python Module Path:       ${PROJECT_PY_MODULE_PATH}")
 message("===========================================")
 
 # ##############################################################################
@@ -137,7 +137,7 @@ set_target_properties(
   ${PROJECT_NAME}_py
   PROPERTIES OUTPUT_NAME "${PROJECT_NAME}"
              LINKER_LANGUAGE CXX
-             LIBRARY_OUTPUT_DIRECTORY "${GTSAM_MODULE_PATH}/${PROJECT_NAME}"
+             LIBRARY_OUTPUT_DIRECTORY "${PROJECT_PY_MODULE_PATH}/${PROJECT_NAME}"
              DEBUG_POSTFIX "" # Otherwise you will have a wrong name
              RELWITHDEBINFO_POSTFIX "" # Otherwise you will have a wrong name
 )
@@ -148,9 +148,9 @@ set_target_properties(
 #   can now access the wrapped module as an installed library.
 add_custom_target(
   python-install
-  COMMAND ${PYTHON_EXECUTABLE} ${GTSAM_MODULE_PATH}/setup.py install
+  COMMAND ${PYTHON_EXECUTABLE} ${PROJECT_PY_MODULE_PATH}/setup.py install
   DEPENDS ${PROJECT_NAME}_py
-  WORKING_DIRECTORY ${GTSAM_MODULE_PATH})
+  WORKING_DIRECTORY ${PROJECT_PY_MODULE_PATH})
 
 # ##############################################################################
 # * 11. Python test command. Simply type `make python-test` to run all the
