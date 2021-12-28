@@ -15,7 +15,7 @@
 
 {holder_type}
 
-//#include "python/preamble.h"
+#include "gtsam_example/preamble/{module_name}.h"
 
 using namespace std;
 
@@ -30,7 +30,7 @@ namespace py = pybind11;
 
 {wrapped_namespace}
 
-#include "python/specializations.h"
+#include "gtsam_example/specializations/{module_name}.h"
 
 }}
 
