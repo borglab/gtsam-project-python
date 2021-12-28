@@ -80,12 +80,21 @@ configure_file(${PROJECT_SOURCE_DIR}/wrapper/__init__.py.in
 configure_file(${PROJECT_SOURCE_DIR}/wrapper/pybind_wrapper.tpl.example
                ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.tpl)
 
-# Copy over C++ headers to use for wrapping
-file(COPY "${PROJECT_SOURCE_DIR}/wrapper/preamble.h"
-     DESTINATION "${PROJECT_BINARY_DIR}/python")
+# Define the list of interface files.
+set(interface_list ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.i
+                   ${PROJECT_SOURCE_DIR}/cpp/sub_dir/sub_dir.i)
 
-file(COPY "${PROJECT_SOURCE_DIR}/wrapper/specializations.h"
-     DESTINATION "${PROJECT_BINARY_DIR}/python")
+# Copy over C++ headers to use for wrapping
+foreach(interface ${interface_list})
+  get_filename_component(interface_name ${interface} NAME_WE)
+
+  file(COPY "${PROJECT_SOURCE_DIR}/wrapper/preamble/${interface_name}.h"
+       DESTINATION "${GTSAM_MODULE_PATH}/${PROJECT_NAME}/preamble")
+
+  file(COPY "${PROJECT_SOURCE_DIR}/wrapper/specializations/${interface_name}.h"
+       DESTINATION "${GTSAM_MODULE_PATH}/${PROJECT_NAME}/specializations")
+
+endforeach()
 
 # Copy all the tests files to module folder.
 file(COPY "${PROJECT_SOURCE_DIR}/python/tests"
@@ -106,9 +115,6 @@ message("===========================================")
 set(ignore "")
 
 # This is the main function that generates the cpp file which Pybind11 will use.
-set(interface_list ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.i
-                   ${PROJECT_SOURCE_DIR}/cpp/sub_dir/sub_dir.i)
-
 pybind_wrap(
   ${PROJECT_NAME}_py # target
   "${interface_list}" # interface header files (gtsam_example.i in the root
@@ -137,11 +143,23 @@ set_target_properties(
 )
 
 # ##############################################################################
-# * 10. Python install command Finally we add a custom make command which we can
-#   invoke to install the generated module. Simply type `make python-install`
-#   and we can now access the wrapped module as an installed library.
+# * 10. Python install command. We add a custom make command which we can invoke
+#   to install the generated module. Simply type `make python-install` and we
+#   can now access the wrapped module as an installed library.
 add_custom_target(
   python-install
   COMMAND ${PYTHON_EXECUTABLE} ${GTSAM_MODULE_PATH}/setup.py install
   DEPENDS ${PROJECT_NAME}_py
   WORKING_DIRECTORY ${GTSAM_MODULE_PATH})
+
+# ##############################################################################
+# * 11. Python test command. Simply type `make python-test` to run all the
+#   python tests in this project.
+add_custom_target(
+  python-test
+  COMMAND
+    ${CMAKE_COMMAND} -E env # add package to python path so no need to install
+    "PYTHONPATH=${PROJECT_BINARY_DIR}/$ENV{PYTHONPATH}" ${PYTHON_EXECUTABLE} -m
+    unittest discover -v -s .
+  DEPENDS ${PROJECT_NAME}_py
+  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/tests")
