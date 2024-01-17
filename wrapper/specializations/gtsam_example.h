@@ -11,4 +11,4 @@
 // py::bind_vector<std::vector<gtsam::Key> >(m_, "KeyVector");
 // py::bind_vector<std::vector<gtsam::Point2> >(m_, "Point2Vector");
 // py::bind_vector<std::vector<gtsam::Pose3> >(m_, "Pose3Vector");
-// py::bind_vector<std::vector<boost::shared_ptr<gtsam::BetweenFactor<gtsam::Pose3> > > >(m_, "BetweenFactorPose3s");
+// py::bind_vector<std::vector<std::shared_ptr<gtsam::BetweenFactor<gtsam::Pose3> > > >(m_, "BetweenFactorPose3s");

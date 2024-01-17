@@ -102,7 +102,7 @@ set_target_properties(
 #   can now access the wrapped module as an installed library.
 add_custom_target(
   python-install
-  COMMAND ${PYTHON_EXECUTABLE} ${PROJECT_PY_MODULE_PATH}/setup.py install
+  COMMAND ${PYTHON_EXECUTABLE} -m pip install --user .
   DEPENDS ${PROJECT_NAME}_py
   WORKING_DIRECTORY ${PROJECT_PY_MODULE_PATH})
 
