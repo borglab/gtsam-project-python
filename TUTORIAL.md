@@ -25,14 +25,16 @@ top-level-directory
 |- python/
   |- tests/
   |- __init__.py.in
-  |- preamble.h
   |- requirements.txt
   |- setup.py.in
-  |- specializations.h
+  |- preamble
+    |- <project>.h
+  |- specializations
+    |- <project>.h
 |- src/
 |- wrap
 |- CMakeLists.txt
-|- <project>.h
+|- <project>.i
 ```
 
 The files are
@@ -130,7 +132,7 @@ An illustrative example is provided in the `src` directory of this repository.
 9. We now specify the wrapping function so that the GTSAM wrapper can do its job. We require only one function `pybind_wrap` which takes the following 9 arguments:
 
     1. Target: The name of the make target with which the wrapping process is associated.
-    2. Interface Header: A `.h` (or `.i`) file which defines what classes, functions, etc., are to be wrapped.
+    2. Interface Header: A `.i` file which defines what classes, functions, etc., are to be wrapped.
     3. Generated Cpp: The name of the generated .cpp file which Pybind11 will use.
     4. Module Name: The name of the Python module. Required for Pybdind11.
     5. Top Namespace: The top-level namespace in the C++ source code.
